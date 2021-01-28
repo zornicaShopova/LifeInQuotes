@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     Button loginBtn ;
     Button   registerBtn;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,7 +24,7 @@ public class MainActivity extends AppCompatActivity {
         loginBtn.setOnClickListener(onClick);
         registerBtn.setOnClickListener(onClick);
     }
-
+//this metod open  new activity when is click on a button
     View.OnClickListener onClick  = new View.OnClickListener() {
         @Override
         public void onClick(View v) {

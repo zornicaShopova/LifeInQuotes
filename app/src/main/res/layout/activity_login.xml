@@ -45,11 +45,11 @@
         app:layout_constraintTop_toBottomOf="@+id/usernameEditText" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/logButton"
         android:layout_width="110dp"
         android:layout_height="wrap_content"
         android:backgroundTint="#CB88E2"
-        android:text="Button"
+        android:text="Login"
         app:cornerRadius="32dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

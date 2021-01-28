@@ -2,13 +2,84 @@ package uni.fmi.masters.lq;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 public class RegisterActivity extends AppCompatActivity {
+
+    //db
+    static final String SHARED_PREF_FULLNAME = "fullname";
+    static final String SHARED_PREF_USERNAME = "username";
+    static final String SHARED_PREF_PASSWORD = "password";
+    static final String SHARED_PREF_NAME = "SecretData";
+
+    SQLiteDatabaseHelper dbHelper;
+    SharedPreferences pref;
+    SharedPreferences.Editor editor;
+
+    //objects
+    EditText fullNameET;
+    EditText usernameET;
+    EditText passwordET;
+    EditText confirmPassET;
+    Button registrationB;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
+
+        dbHelper = new SQLiteDatabaseHelper(this);
+        //take object by ID
+        fullNameET = findViewById(R.id.FullNameEditText);
+        usernameET = findViewById(R.id.usernameEditT);
+        passwordET = findViewById(R.id.passwordEditT);
+        confirmPassET = findViewById(R.id.confirmPassEditText);
+        registrationB = findViewById(R.id.RegistrationButton);
+
+        pref = getApplicationContext().getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
+        editor = pref.edit();
+
+        registrationB.setOnClickListener(onClick);
+
     }
+
+    View.OnClickListener onClick = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            //check if the field  is empty
+            if (v.getId() == R.id.registerButton) {
+                if (fullNameET.getText().length() > 0
+                        && usernameET.getText().length() > 0
+                        && passwordET.getText().length() > 0
+                        && passwordET.getText().toString().equals(confirmPassET.getText().toString())) {
+
+                    String username = usernameET.getText().toString();
+                    String password = passwordET.getText().toString();
+                    String fullname = fullNameET.getText().toString();
+
+                    User user = new User();
+                    user.setUsername(username);
+                    user.setFullname(fullname);
+                    user.setPassword(password);
+
+
+                    if (!dbHelper.registerUser(user)) {
+                        Toast.makeText(RegisterActivity.this, "Something went  wrong", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                } else {
+                    Toast.makeText(RegisterActivity.this, "Please provide all the necessary information!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            startActivity(intent);
+        }
+    };
 }
