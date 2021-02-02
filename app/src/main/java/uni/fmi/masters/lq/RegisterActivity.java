@@ -53,7 +53,7 @@ public class RegisterActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             //check if the field  is empty
-            if (v.getId() == R.id.registerButton) {
+            if (v.getId() == R.id.RegistrationButton) {
                 if (fullNameET.getText().length() > 0
                         && usernameET.getText().length() > 0
                         && passwordET.getText().length() > 0
@@ -70,7 +70,7 @@ public class RegisterActivity extends AppCompatActivity {
 
 
                     if (!dbHelper.registerUser(user)) {
-                        Toast.makeText(RegisterActivity.this, "Something went  wrong", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(RegisterActivity.this, "Something went wrong", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 } else {
@@ -78,7 +78,7 @@ public class RegisterActivity extends AppCompatActivity {
                     return;
                 }
             }
-            Intent intent = new Intent(RegisterActivity.this, LoginActivity.class);
+            Intent intent = new Intent(RegisterActivity.this, RegisterConfirmationActivity.class);  // Register confirm activity
             startActivity(intent);
         }
     };

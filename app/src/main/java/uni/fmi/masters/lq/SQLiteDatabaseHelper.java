@@ -75,11 +75,14 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
         Cursor c = null;
         try {
             db = getReadableDatabase();
-            String sql = "SELECT * FROM" + TABLE_USER + "WHERE " + TABLE_USER_USERNAME + "=" + username + "'"
-                    + "AND" + TABLE_USER_PASSWORD + "= " + password + "'";
+            String sql = "SELECT * FROM " + TABLE_USER
+                    + " WHERE " + TABLE_USER_USERNAME + " = '" + username + "'"
+                    + " AND " + TABLE_USER_PASSWORD + " = '" + password + "'";
 
             c = db.rawQuery(sql, null);
+
             return c.moveToFirst();
+
         } catch (SQLException e) {
             Log.wtf(MY_ERROR, e.getMessage());
         } finally {
@@ -87,7 +90,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
                 c.close();
             }
 
-            if (db!=  null){
+            if (db != null){
                 db.close();
             }
         }

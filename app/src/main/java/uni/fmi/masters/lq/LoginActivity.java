@@ -13,10 +13,11 @@ import android.widget.Toast;
 public class LoginActivity extends AppCompatActivity {
 
     SharedPreferences pref;
-    String username;
-    String password;
     SQLiteDatabaseHelper dbHelper;
 
+    String username;
+    String password;
+    
     //objects
     EditText usernameEText;
     EditText passwordEText;
@@ -36,8 +37,9 @@ public class LoginActivity extends AppCompatActivity {
         loginB.setOnClickListener(onClick);
 
         pref = getApplicationContext().getSharedPreferences(RegisterActivity.SHARED_PREF_NAME, MODE_PRIVATE);
-        username = pref.getString(RegisterActivity.SHARED_PREF_USERNAME, "zori");
-        password = pref.getString(RegisterActivity.SHARED_PREF_PASSWORD, "1234");
+
+//        username = pref.getString(RegisterActivity.SHARED_PREF_USERNAME, "zori");
+//        password = pref.getString(RegisterActivity.SHARED_PREF_PASSWORD, "1234");
 
     }
 
