@@ -9,6 +9,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -16,7 +17,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.MenuItem;
+import android.view.View;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.IOException;
@@ -31,6 +34,11 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     NavigationView navigationView;
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
+
+    //quotes
+    RecyclerView quotesRV;
+    //add quotes
+    FloatingActionButton addQuoteFB;
 
     //profile  picture
     private CircleImageView ProfileView;
@@ -65,7 +73,18 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         //picture
         ProfileView = findViewById(R.id.profileImageView);
+
+        //quotes
+        quotesRV = findViewById(R.id.quotesResyclerView);
+        //addQuoteBTN
+        addQuoteFB = findViewById(R.id.addFloatingButton);
+        addQuoteFB.setOnClickListener(onClick);
     }
+
+    View.OnClickListener onClick = v -> {
+        Intent intent  = new Intent(HomeActivity.this,AddQuote.class);
+        startActivity(intent);
+    };
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -118,6 +137,7 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         super.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == PICK_IMAGE && resultCode == RESULT_OK) {
+            assert data != null;
             imageUri = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);

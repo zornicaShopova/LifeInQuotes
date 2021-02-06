@@ -15,7 +15,7 @@ public class UserDatabase extends SQLiteOpenHelper {
     public static final String DB_NAME = "register.db";
     public static final int DB_VERSION = 1;
 
-    //field of  db table
+    //columns of  db table
     public static final String TABLE_USER = "user";
     public static final String TABLE_USER_ID = "id";
     public static final String TABLE_USER_FULLNAME = "fullname";
