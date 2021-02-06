@@ -10,7 +10,7 @@ import android.util.Log;
 
 import androidx.annotation.Nullable;
 
-public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
+public class UserDatabase extends SQLiteOpenHelper {
     //the  name  of the db
     public static final String DB_NAME = "register.db";
     public static final int DB_VERSION = 1;
@@ -31,7 +31,7 @@ public class SQLiteDatabaseHelper extends SQLiteOpenHelper {
     //error   message
     public static final String MY_ERROR = "MyError";
 
-    public SQLiteDatabaseHelper(@Nullable Context context) {
+    public UserDatabase(@Nullable Context context) {
         super(context, DB_NAME, null, DB_VERSION);
     }
 

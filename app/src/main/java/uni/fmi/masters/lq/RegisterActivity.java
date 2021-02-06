@@ -18,7 +18,7 @@ public class RegisterActivity extends AppCompatActivity {
     static final String SHARED_PREF_PASSWORD = "password";
     static final String SHARED_PREF_NAME = "SecretData";
 
-    SQLiteDatabaseHelper dbHelper;
+    UserDatabase dbHelper;
     SharedPreferences pref;
     SharedPreferences.Editor editor;
 
@@ -34,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        dbHelper = new SQLiteDatabaseHelper(this);
+        dbHelper = new UserDatabase(this);
         //take object by ID
         fullNameET = findViewById(R.id.FullNameEditText);
         usernameET = findViewById(R.id.usernameEditT);

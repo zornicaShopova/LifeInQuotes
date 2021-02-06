@@ -13,7 +13,7 @@ import android.widget.Toast;
 public class LoginActivity extends AppCompatActivity {
 
     SharedPreferences pref;
-    SQLiteDatabaseHelper dbHelper;
+    UserDatabase dbHelper;
 
     String username;
     String password;
@@ -27,7 +27,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        dbHelper = new SQLiteDatabaseHelper(this);
+        dbHelper = new UserDatabase(this);
 
         //find  object by id
         usernameEText = findViewById(R.id.usernameEditText);
