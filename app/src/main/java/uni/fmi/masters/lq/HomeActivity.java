@@ -9,6 +9,7 @@ import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
@@ -23,6 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.IOException;
+import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -44,6 +46,10 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     private CircleImageView ProfileView;
     private static final int PICK_IMAGE = 1;
     Uri imageUri;
+    //adapter
+    Adapter adapter;
+    List<Quote> quotes;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,6 +85,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
         //addQuoteBTN
         addQuoteFB = findViewById(R.id.addFloatingButton);
         addQuoteFB.setOnClickListener(onClick);
+
+        //adapter
+        //takes quotes from db
+        QuotesDatabase db = new QuotesDatabase(this);
+        quotes  = db.getQuotes();
+        quotesRV.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new Adapter(this,quotes);
+        quotesRV.setAdapter(adapter);
     }
 
     View.OnClickListener onClick = v -> {
