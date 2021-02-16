@@ -27,7 +27,9 @@ public class RegisterActivity extends AppCompatActivity {
     EditText usernameET;
     EditText passwordET;
     EditText confirmPassET;
+    EditText emailET;
     Button registrationB;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,7 @@ public class RegisterActivity extends AppCompatActivity {
         passwordET = findViewById(R.id.passwordEditT);
         confirmPassET = findViewById(R.id.confirmPassEditText);
         registrationB = findViewById(R.id.RegistrationButton);
+        emailET = findViewById(R.id.emailEditText);
 
         pref = getApplicationContext().getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE);
         editor = pref.edit();
@@ -55,18 +58,21 @@ public class RegisterActivity extends AppCompatActivity {
             //check if the field  is empty
             if (v.getId() == R.id.RegistrationButton) {
                 if (fullNameET.getText().length() > 0
+                        && emailET.getText().length() > 0
                         && usernameET.getText().length() > 0
                         && passwordET.getText().length() > 0
                         && passwordET.getText().toString().equals(confirmPassET.getText().toString())) {
 
-                    String username = usernameET.getText().toString();
-                    String password = passwordET.getText().toString();
-                    String fullname = fullNameET.getText().toString();
+                    String usernameSting = usernameET.getText().toString();
+                    String passwordString = passwordET.getText().toString();
+                    String fullnameString = fullNameET.getText().toString();
+                    String emailString = emailET.getText().toString();
 
                     User user = new User();
-                    user.setUsername(username);
-                    user.setFullname(fullname);
-                    user.setPassword(password);
+                    user.setUsername(usernameSting);
+                    user.setFullname(fullnameString);
+                    user.setPassword(passwordString);
+                    user.setEmail(emailString);
 
 
                     if (!dbHelper.registerUser(user)) {

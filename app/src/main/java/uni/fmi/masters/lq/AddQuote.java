@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 
 public class AddQuote extends AppCompatActivity {
@@ -38,7 +39,7 @@ public class AddQuote extends AppCompatActivity {
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         //change the title  of the toolbar
-        getSupportActionBar().setTitle("Add Quote");
+        Objects.requireNonNull(getSupportActionBar()).setTitle("Add Quote");
         //arrow for  back  btn
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -53,7 +54,7 @@ public class AddQuote extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.length() != 0) {
-                    getSupportActionBar().setTitle(s);
+                    Objects.requireNonNull(getSupportActionBar()).setTitle(s);
                 }
             }
 
@@ -89,7 +90,7 @@ public class AddQuote extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         if(item.getItemId() == R.id.saveItemBtn){
-            Quote quote = new Quote(authorET.getText().toString(),quoteContextET.toString(),todaysDate.toString(),currentTime.toString());
+            Quote quote = new Quote(authorET.getText().toString(),quoteContextET.getText().toString(),todaysDate,currentTime);
             //call  db and insert the quote data
             QuotesDatabase db  = new QuotesDatabase(this);
             db.addQuote(quote);

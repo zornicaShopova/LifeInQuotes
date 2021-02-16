@@ -1,6 +1,5 @@
 package uni.fmi.masters.lq;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,33 +11,31 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-import static uni.fmi.masters.lq.R.layout.custom_list_view;
 
+
+//viewHolder is  in  used  to show  the data on  a row
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
-
-    LayoutInflater inflater;
     List<Quote> quotes;
 
-    Adapter(Context context, List<Quote> quotes) {
-        this.inflater = LayoutInflater.from(context);
+    Adapter(List<Quote> quotes) {
         this.quotes = quotes;
     }
 
     @NonNull
     @Override
     public Adapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int i) {
-        View v = inflater.inflate(R.layout.custom_list_view, parent, false);
-        return new ViewHolder(v);
+
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.single_row_quote,parent, false);
+        return new ViewHolder(view);
     }
 
+    //update the viewHolder
     @Override
-    public void onBindViewHolder(@NonNull Adapter.ViewHolder viewHolder, int i) {
-        String quote = quotes.get(i).getContent();
-        String author = quotes.get(i).getAuthor();
-        String date = quotes.get(i).getDate();
-        viewHolder.quoteTV.setText(quote);
-        viewHolder.dateTV.setText(date);
-        viewHolder.authorTV.setText(author);
+    public void onBindViewHolder(@NonNull ViewHolder viewHolder, int position) {
+
+        viewHolder.getAuthorTV().setText(quotes.get(position).getAuthor());
+        viewHolder.getDateTV().setText(quotes.get(position).getDate());
+        viewHolder.getQuoteTV().setText(quotes.get(position).getContent());
     }
 
     @Override
@@ -46,7 +43,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
         return quotes.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView authorTV, quoteTV, dateTV;
 
         public ViewHolder(@NonNull View itemView) {
@@ -56,5 +53,20 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder> {
             dateTV = itemView.findViewById(R.id.dateTextView);
 
         }
+
+        public TextView getAuthorTV(){
+            return authorTV;
+        }
+        public TextView getQuoteTV(){
+            return quoteTV;
+        }
+        public TextView getDateTV(){
+            return dateTV;
+        }
+
     }
+
+
+
+
 }

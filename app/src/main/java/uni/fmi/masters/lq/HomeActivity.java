@@ -17,13 +17,16 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -37,24 +40,21 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
-    //quotes
-    RecyclerView quotesRV;
-    //add quotes
-    FloatingActionButton addQuoteFB;
-
     //profile  picture
     private CircleImageView ProfileView;
     private static final int PICK_IMAGE = 1;
     Uri imageUri;
-    //adapter
-    Adapter adapter;
-    List<Quote> quotes;
+
+    //add quotes
+    FloatingActionButton addQuoteFB;
 
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate (Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+        //get the fragment with quotes items
+        getSupportFragmentManager().beginTransaction().replace(R.id.container_fragment,new HomeFragment()).commit();
+
 
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -79,24 +79,14 @@ public class HomeActivity extends AppCompatActivity implements NavigationView.On
 
         //picture
         ProfileView = findViewById(R.id.profileImageView);
-
-        //quotes
-        quotesRV = findViewById(R.id.quotesResyclerView);
         //addQuoteBTN
         addQuoteFB = findViewById(R.id.addFloatingButton);
         addQuoteFB.setOnClickListener(onClick);
 
-        //adapter
-        //takes quotes from db
-        QuotesDatabase db = new QuotesDatabase(this);
-        quotes  = db.getQuotes();
-        quotesRV.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new Adapter(this,quotes);
-        quotesRV.setAdapter(adapter);
     }
 
     View.OnClickListener onClick = v -> {
-        Intent intent  = new Intent(HomeActivity.this,AddQuote.class);
+        Intent intent = new Intent(HomeActivity.this, AddQuote.class);
         startActivity(intent);
     };
 
