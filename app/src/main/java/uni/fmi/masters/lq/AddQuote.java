@@ -33,8 +33,8 @@ public class AddQuote extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_quote);
 
-        quoteContextET = findViewById(R.id.quoteContextEditText);
-        authorET = findViewById(R.id.authorEditText);
+        quoteContextET = findViewById(R.id.quoteContextUpdateET);
+        authorET = findViewById(R.id.authorUpdateET);
         //set toolbar
         toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -99,7 +99,7 @@ public class AddQuote extends AppCompatActivity {
             onBackPressed();
         }
 
-        if(item.getItemId() == R.id.deleteItemBtn){
+        if(item.getItemId() == R.id.closeItemBtn){
             Toast.makeText(this,"Quote not saved",Toast.LENGTH_SHORT).show();
             onBackPressed();
         }

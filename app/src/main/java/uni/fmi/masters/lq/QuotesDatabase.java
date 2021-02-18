@@ -7,12 +7,12 @@ import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
 import java.util.List;
-
 
 
 public class QuotesDatabase extends SQLiteOpenHelper {
@@ -31,6 +31,8 @@ public class QuotesDatabase extends SQLiteOpenHelper {
     public static final String TABLE_QUOTE_TIME = "time";
     public static final String TABLE_QUOTE_DATE = "date";
 
+    private Context context;
+
     //create  table
     public static final String CREATE_TABLE_QUOTES = "CREATE TABLE " + TABLE_QUOTE
             + "('" + TABLE_QUOTE_ID + "'INTEGER PRIMARY KEY AUTOINCREMENT," + "'"
@@ -44,6 +46,7 @@ public class QuotesDatabase extends SQLiteOpenHelper {
     //constructor
     public QuotesDatabase(@Nullable Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
+        this.context = context;
     }
 
     @Override
@@ -63,7 +66,7 @@ public class QuotesDatabase extends SQLiteOpenHelper {
     //save quote data in  the database
     public long addQuote(Quote quote) {
 
-        SQLiteDatabase db =  null;
+        SQLiteDatabase db = null;
         ContentValues cv = null;
         try {
             db = this.getWritableDatabase();
@@ -75,13 +78,13 @@ public class QuotesDatabase extends SQLiteOpenHelper {
             ID = db.insert(TABLE_QUOTE, null, cv);
             Log.d("Inserted", "ID -> " + ID);
 
-        }catch (SQLException e){
-            Log.wtf(MY_ERROR,e.getMessage());
-        }finally {
-            if(db !=null)
+        } catch (SQLException e) {
+            Log.wtf(MY_ERROR, e.getMessage());
+        } finally {
+            if (db != null)
                 db.close();
 
-            if(cv!=null)
+            if (cv != null)
                 cv.clear();
         }
         return ID;
@@ -93,7 +96,7 @@ public class QuotesDatabase extends SQLiteOpenHelper {
         //we read the data from  the db
         SQLiteDatabase db = this.getReadableDatabase();
         //cursor point to the specific item in the db
-        Cursor cursor = db.query(TABLE_QUOTE, new String[]{TABLE_QUOTE_ID, TABLE_QUOTE_CONTENT,TABLE_QUOTE_AUTHOR, TABLE_QUOTE_TIME, TABLE_QUOTE_DATE}, TABLE_QUOTE_ID + "=?",
+        Cursor cursor = db.query(TABLE_QUOTE, new String[]{TABLE_QUOTE_ID, TABLE_QUOTE_CONTENT, TABLE_QUOTE_AUTHOR, TABLE_QUOTE_TIME, TABLE_QUOTE_DATE}, TABLE_QUOTE_ID + "=?",
                 new String[]{String.valueOf(ID)}, null, null, null);
         if (cursor != null) {
             //cursor starts at minus 1 so we  use moveToFirst to move  forward
@@ -132,4 +135,32 @@ public class QuotesDatabase extends SQLiteOpenHelper {
         cursor.close();
         return allQuotes;
     }
+
+    //update quote
+    void updateData(String id,String content, String author ) {
+
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(TABLE_QUOTE_CONTENT, content);
+        cv.put(TABLE_QUOTE_AUTHOR, author);
+
+
+        long result = db.update(TABLE_QUOTE, cv, "id = ?", new String[]{id});
+        if (result == -1) {
+            Toast.makeText(context, "Failed to update", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Successfully Updated!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    void deleteOneRow(String id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete(TABLE_QUOTE, "id = ?", new String[]{id});
+        if (result == -1) {
+            Toast.makeText(context, "Failed to delete!", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Successfully deleted!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 }

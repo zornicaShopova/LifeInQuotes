@@ -8,8 +8,8 @@
         android:title="Ok"
         app:showAsAction="ifRoom" />
     <item
-        android:id="@+id/deleteItemBtn"
-        android:icon="@drawable/ic_baseline_delete_24"
+        android:id="@+id/closeItemBtn"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
         android:title="delete"
         app:showAsAction="ifRoom" />
 </menu>
